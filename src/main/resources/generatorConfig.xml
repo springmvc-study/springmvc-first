@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!--配置文件-->
+    <properties resource="properties/db.properties"/>
+
+    <!-- 数据库驱动 -->
+    <classPathEntry
+            location="${jdbc.generatorJarPath}"/>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+
+        <!-- 产生分页代码的插件 -->
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin">
+        </plugin>
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="${jdbc.driver}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成模型的包名和位置 -->
+        <javaModelGenerator targetPackage="com.sjtu.charles.po" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成映射文件的包名和位置 -->
+        <sqlMapGenerator targetPackage="com.sjtu.charles.mapper"
+                         targetProject="./src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成DAO的包名和位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="com.sjtu.charles.mapper" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--生成全部的表，可以使用SQL通配符匹配多个表-->
+        <table tableName="%" />
+
+
+        <!--  生成指定的表，数据库的schema,可以使用SQL通配符匹配。如果设置了该值，生成SQL的表名会变成 -->
+        <!--<table tableName="user" schema="summoncat">
+            &lt;!&ndash; 以下节点貌似可以返回新增记录后的id &ndash;&gt;
+            &lt;!&ndash;<generatedKey column="id" sqlStatement="MySql" identity="true"/>&ndash;&gt;
+        </table>-->
+
+    </context>
+</generatorConfiguration>
